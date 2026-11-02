@@ -1,0 +1,20 @@
+# Companion Voice for Home Assistant
+
+> Companion Voice for Home Assistant connects a Home Assistant Voice PE to a Companion that runs on your own hardware. Companion Memory is an optional part of the setup. The setup site at https://ha.ci.computer/ is a guided setup that builds the configuration files in your browser.
+
+Three hops, by default all inside your home: the Voice PE hears the wake word, Home Assistant passes the speech on, and your Companion answers. In the recommended setup, speech and answers stay inside your home. The keys you type or generate on the setup site stay in your browser. The connection check on the page sends your MASTER_API_KEY only to the ci-server address you enter.
+
+Companion Voice is licensed under the PolyForm Noncommercial License 1.0.0, free for personal and nonprofit use. Companion Intelligence (https://ci.computer/) is the platform this belongs to.
+
+## Pages
+
+- [Setup](https://ha.ci.computer/): the guided setup for the Voice PE, with the .env generator, the compose file download and the checks
+- [Docs](https://docs.ci.computer/docs/apps-available/first-party-apps/home-assistant-voice-pe): the Companion Voice documentation
+- [Hub store listing](https://hub.ci.computer/store/ci-ha-voice): the Companion Hub app listing for Companion Voice
+
+## Optional
+
+- [Companion Intelligence](https://ci.computer/): the platform this belongs to
+- [Privacy policy](https://ci.computer/privacy-policy): how Companion Intelligence handles data
+
+Support: support@companionintelligence.com
