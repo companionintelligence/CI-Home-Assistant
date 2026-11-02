@@ -1,0 +1,24 @@
+name: Companion Voice
+description: Voice Assistant pipeline answered by your Companion Intelligence stack, with memory.
+version: "0.2.0"
+slug: companion_voice
+init: false
+arch:
+  - amd64
+  - aarch64
+startup: services
+boot: auto
+ports:
+  10700/tcp: 10700
+options:
+  ci_server_url: "http://ci-server:8080"
+  ci_server_api_key: ""
+  ci_model: "ollama:llama3.2"
+  ci_tts_voice: "alloy"
+  languages: "en"
+schema:
+  ci_server_url: url
+  ci_server_api_key: password
+  ci_model: str
+  ci_tts_voice: str
+  languages: str

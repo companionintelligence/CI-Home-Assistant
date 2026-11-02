@@ -13,6 +13,9 @@ step "voice-bridge: unit and Wyoming end-to-end tests"
 python -m pip install -q -r voice-bridge/requirements.txt -r voice-bridge/requirements-dev.txt
 (cd voice-bridge && python -m pytest -q)
 
+step "Home Assistant integration: pure logic (PKCE, command allowlist, manifest)"
+python3 -m unittest discover -s tests/ha -t tests/ha -q
+
 step "whole stack: real ci-server + real bridge, stubbed upstreams"
 python -m pytest e2e -q
 

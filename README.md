@@ -95,6 +95,39 @@ as shown in `.env.example`.
 
 Set `WYOMING_ZEROCONF=true` (with host networking) and Home Assistant discovers the bridge by itself.
 
+## Home Assistant app and HACS integration
+
+Two additions let Home Assistant and Companion Intelligence control each other.
+
+| Piece | Where | What it does |
+|---|---|---|
+| **Companion Voice app** | `companion-voice/` (add this repository as an app repository) | Runs the Voice Bridge inside Home Assistant on port 10700, configured from the app options |
+| **Companion Voice integration** | `custom_components/companion_voice/` (HACS) | Signs in with CI-Portal (OIDC + PKCE), forwards watched entity changes to Companion Memory, and accepts commands from Companion Hub |
+
+**Sign-in.** The config flow builds a PKCE authorize link for CI-Portal (client
+`ci-home-assistant` by default). After you sign in, Portal redirects to Home
+Assistant's own callback at `/api/companion_voice/oauth/callback`, which shows the
+code to paste back into the flow. CI-Portal only accepts private or localhost
+redirect addresses, so use Home Assistant's local IP address rather than a
+`.local` hostname. The setup also issues a command token to paste into Companion Hub.
+
+**Hub to Home Assistant.** Hub sends `POST /api/companion_voice/command` with
+`Authorization: Bearer <command token>`. The commands are `list_entities`,
+`get_state` and `call_service`. Only the domains in the allowlist (lights, switches,
+fans, covers, climates, media players, scenes and scripts by default) can be called.
+
+**Home Assistant to memory.** Each change to a watched entity is saved to Companion
+Memory with `POST /memory/turn`, using a memory-scoped key.
+
+Test the pure logic (PKCE, command allowlist, manifest) without Home Assistant:
+
+```bash
+python3 -m unittest discover -s tests/ha -t tests/ha
+```
+
+The integration's Home Assistant code is not covered by these tests. Verify it on a
+Home Assistant instance before release.
+
 ## Companion Memory
 
 Create an API key in Companion Memory under **Settings, API keys** with only the

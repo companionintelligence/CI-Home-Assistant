@@ -1,0 +1,43 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect Companion Voice",
+        "description": "Enter your Companion Hub address. Add Companion Memory to ground answers and save events to it.",
+        "data": {
+          "hub_url": "Companion Hub URL",
+          "portal_url": "CI-Portal URL",
+          "oidc_client_id": "OIDC client ID",
+          "memory_url": "Companion Memory URL (optional)",
+          "memory_api_key": "Memory API key (memory scope)",
+          "watched_entities": "Entities to remember"
+        }
+      },
+      "sign_in": {
+        "title": "Sign in with Companion Intelligence",
+        "description": "1. Open this link and sign in: {authorize_url}\n2. When the page shows a code, paste it below.\n\nThen give Companion Hub this command token so it can control Home Assistant: `{command_token}`",
+        "data": {
+          "code": "Authorization code"
+        }
+      }
+    },
+    "error": {
+      "invalid_url": "Enter a full URL starting with http:// or https://",
+      "memory_key_required": "A memory API key is required when a Memory URL is set",
+      "sign_in_failed": "Sign-in did not complete. Start over and try a fresh code."
+    },
+    "abort": {
+      "already_configured": "Companion Voice is already set up."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Companion Voice options",
+        "data": {
+          "watched_entities": "Entities to remember"
+        }
+      }
+    }
+  }
+}
