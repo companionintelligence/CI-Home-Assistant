@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="web/public/icon.svg" alt="Companion Voice icon: a Home Assistant Voice PE seen from above, its light ring listening" width="112" height="112">
+<img src="https://raw.githubusercontent.com/companionintelligence/.github/main/profile/assets/icons/home-assistant-voice.png" width="96" height="96" alt="Companion Voice for Home Assistant icon">
 
 <h1 align="center">Companion Voice for Home Assistant</h1>
 
