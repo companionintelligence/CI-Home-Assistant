@@ -4,6 +4,7 @@ from __future__ import annotations
 import secrets
 from typing import Any
 
+import aiohttp
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.helpers.network import get_url
@@ -51,6 +52,8 @@ class CompanionVoiceConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 errors[CONF_HUB_URL] = "invalid_url"
             if user_input.get(CONF_MEMORY_URL) and not user_input[CONF_MEMORY_API_KEY]:
                 errors[CONF_MEMORY_API_KEY] = "memory_key_required"
+            if not errors and not await self._portal_reachable(user_input[CONF_PORTAL_URL]):
+                errors["base"] = "cannot_reach_portal"
             if not errors:
                 self._settings = user_input
                 return await self.async_step_sign_in()
@@ -70,6 +73,14 @@ class CompanionVoiceConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             }
         )
         return self.async_show_form(step_id="user", data_schema=schema, errors=errors)
+
+    async def _portal_reachable(self, portal_url: str) -> bool:
+        """Check the CI-Portal address now, so a wrong address is reported on the first step."""
+        try:
+            await discover(async_get_clientsession(self.hass), portal_url)
+        except (OIDCError, aiohttp.ClientError, ValueError):
+            return False
+        return True
 
     async def async_step_sign_in(self, user_input: dict[str, Any] | None = None):
         errors: dict[str, str] = {}

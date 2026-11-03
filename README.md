@@ -139,6 +139,14 @@ Two additions let Home Assistant and Companion Intelligence control each other.
 | **Companion Voice app** | `companion-voice/` (add this repository as an app repository) | Runs the Voice Bridge inside Home Assistant on port 10700, configured from the app options |
 | **Companion Voice integration** | `custom_components/companion_voice/` (HACS) | Signs in with CI-Portal (OIDC + PKCE), forwards watched entity changes to Companion Memory, and accepts commands from Companion Hub |
 
+Install either part:
+
+- **Home Assistant app:** add this repository as an app repository, then install **Companion Voice**.
+
+  [![Add the app repository](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fcompanionintelligence%2FCI-Home-Assistant-Voice-PE)
+
+- **HACS:** in HACS, open **Custom repositories**, add `https://github.com/companionintelligence/CI-Home-Assistant-Voice-PE` as an **Integration**, install **Companion Voice**, then restart Home Assistant.
+
 **Sign-in.** The config flow builds a PKCE authorize link for CI-Portal (client
 `ci-home-assistant` by default). After you sign in, Portal redirects to Home
 Assistant's own callback at `/api/companion_voice/oauth/callback`, which shows the

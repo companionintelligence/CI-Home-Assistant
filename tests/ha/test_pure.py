@@ -9,9 +9,11 @@ import importlib.util
 import json
 import pathlib
 import re
+import struct
 import unittest
 
-PKG = pathlib.Path(__file__).resolve().parents[2] / "custom_components" / "companion_voice"
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+PKG = ROOT / "custom_components" / "companion_voice"
 
 
 def _load(name: str):
@@ -19,6 +21,14 @@ def _load(name: str):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def _png_size(path):
+    with open(path, "rb") as handle:
+        header = handle.read(24)
+    if header[:8] != b"\x89PNG\r\n\x1a\n" or header[12:16] != b"IHDR":
+        raise ValueError(f"{path} is not a PNG file")
+    return struct.unpack(">II", header[16:24])
 
 
 pkce = _load("pkce")
@@ -84,12 +94,48 @@ class CommandValidationTests(unittest.TestCase):
 
 
 class ManifestTests(unittest.TestCase):
+    def setUp(self):
+        self.manifest = json.loads((PKG / "manifest.json").read_text())
+
     def test_manifest_has_hacs_required_keys(self):
-        manifest = json.loads((PKG / "manifest.json").read_text())
         for key in ("domain", "documentation", "issue_tracker", "codeowners", "name", "version"):
-            self.assertIn(key, manifest)
-        self.assertEqual(manifest["domain"], "companion_voice")
-        self.assertRegex(manifest["version"], r"^\d+\.\d+\.\d+$")
+            self.assertIn(key, self.manifest)
+        self.assertEqual(self.manifest["domain"], "companion_voice")
+        self.assertRegex(self.manifest["version"], r"^\d+\.\d+\.\d+$")
+
+    def test_manifest_keys_follow_the_hassfest_order(self):
+        keys = list(self.manifest)
+        self.assertEqual(keys[:2], ["domain", "name"])
+        self.assertEqual(keys[2:], sorted(keys[2:]))
+
+    def test_manifest_declares_its_category_and_type(self):
+        self.assertEqual(self.manifest["categories"], ["ai_voice.voice_assistants"])
+        self.assertEqual(self.manifest["integration_type"], "service")
+
+    def test_manifest_links_point_at_github_over_https(self):
+        self.assertTrue(self.manifest["documentation"].startswith("https://github.com/"))
+        self.assertTrue(self.manifest["issue_tracker"].startswith("https://github.com/"))
+
+    def test_codeowners_are_github_handles(self):
+        for owner in self.manifest["codeowners"]:
+            self.assertRegex(owner, r"^@[A-Za-z0-9-]+$")
+
+
+class HacsJsonTests(unittest.TestCase):
+    def test_hacs_json_names_the_integration_in_a_subfolder(self):
+        hacs = json.loads((ROOT / "hacs.json").read_text())
+        self.assertEqual(hacs["name"], "Companion Voice")
+        self.assertIs(hacs["content_in_root"], False)
+
+    def test_hacs_json_states_the_tested_home_assistant_minimum(self):
+        hacs = json.loads((ROOT / "hacs.json").read_text())
+        self.assertRegex(hacs["homeassistant"], r"^\d{4}\.\d+\.\d+$")
+
+
+class BrandTests(unittest.TestCase):
+    def test_brand_icons_match_the_home_assistant_spec(self):
+        self.assertEqual(_png_size(PKG / "brand" / "icon.png"), (256, 256))
+        self.assertEqual(_png_size(PKG / "brand" / "icon@2x.png"), (512, 512))
 
 
 if __name__ == "__main__":

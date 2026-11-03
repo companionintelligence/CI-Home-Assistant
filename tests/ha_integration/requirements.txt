@@ -1,0 +1,4 @@
+# Home Assistant 2026.10.4. The minimum in hacs.json (2025.10.4) is checked with
+# pytest-homeassistant-custom-component==0.13.289 and pycares<5 instead.
+pytest-homeassistant-custom-component==0.13.375
+pytest-cov
