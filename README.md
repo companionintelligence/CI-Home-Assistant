@@ -8,8 +8,8 @@
 
 </div>
 
-[![release](https://img.shields.io/badge/release-not%20published-757575?style=flat-square)](https://github.com/companionintelligence/CI-Home-Assistant-Voice-PE/releases)
-[![platform](https://img.shields.io/badge/platform-Home%20Assistant%20%C2%B7%20Docker-0a6358?style=flat-square)](https://github.com/companionintelligence/CI-Home-Assistant-Voice-PE)
+[![release](https://img.shields.io/badge/release-not%20published-757575?style=flat-square)](https://github.com/companionintelligence/CI-Home-Assistant/releases)
+[![platform](https://img.shields.io/badge/platform-Home%20Assistant%20%C2%B7%20Docker-0a6358?style=flat-square)](https://github.com/companionintelligence/CI-Home-Assistant)
 [![License](https://img.shields.io/badge/license-MIT-0a6358?style=flat-square)](LICENSE.md)
 [![Discord](https://img.shields.io/badge/chat-Discord-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.com/invite/yQp9hwpzAa)
 
@@ -101,8 +101,8 @@ faster-whisper and Piper add-ons for speech.
 ## Quick start from source
 
 ```bash
-git clone https://github.com/companionintelligence/CI-Home-Assistant-Voice-PE.git
-cd CI-Home-Assistant-Voice-PE
+git clone https://github.com/companionintelligence/CI-Home-Assistant.git
+cd CI-Home-Assistant
 cp .env.example .env          # set MASTER_API_KEY and POSTGRES_PASSWORD (openssl rand -hex 32)
 docker compose up -d
 docker compose exec ollama ollama pull llama3.2
@@ -143,9 +143,9 @@ Install either part:
 
 - **Home Assistant app:** add this repository as an app repository, then install **Companion Voice**.
 
-  [![Add the app repository](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fcompanionintelligence%2FCI-Home-Assistant-Voice-PE)
+  [![Add the app repository](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fcompanionintelligence%2FCI-Home-Assistant)
 
-- **HACS:** in HACS, open **Custom repositories**, add `https://github.com/companionintelligence/CI-Home-Assistant-Voice-PE` as an **Integration**, install **Companion Voice**, then restart Home Assistant.
+- **HACS:** in HACS, open **Custom repositories**, add `https://github.com/companionintelligence/CI-Home-Assistant` as an **Integration**, install **Companion Voice**, then restart Home Assistant.
 
 **Sign-in.** The config flow builds a PKCE authorize link for CI-Portal (client
 `ci-home-assistant` by default). After you sign in, Portal redirects to Home
@@ -269,7 +269,7 @@ cd web && npm ci && npm test && npm run check
 - **web:** `node --test` for the generator logic, a check that every page step is wired, and a drift test that keeps `web/public/compose.yml` in step with `docker-compose.yml`.
 
 Hosted CI is gated, as across the organization. Dispatch it when you want a run:
-`gh workflow run ci.yml --repo companionintelligence/CI-Home-Assistant-Voice-PE --ref <branch>`.
+`gh workflow run ci.yml --repo companionintelligence/CI-Home-Assistant --ref <branch>`.
 
 ## Deployment
 
