@@ -23,6 +23,12 @@ def main() -> None:
     with open(OPTIONS_PATH, encoding="utf-8") as handle:
         options = json.load(handle)
 
+    if not options.get("ci_server_url"):
+        sys.exit(
+            "ci_server_url is not set. Set it in the app options to the address "
+            "of your ci-server, as Home Assistant can reach it."
+        )
+
     for option, env_name in OPTION_ENV.items():
         value = options.get(option)
         if value not in (None, ""):

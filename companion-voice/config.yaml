@@ -1,5 +1,6 @@
 name: Companion Voice
 description: Voice Assistant pipeline answered by your Companion Intelligence stack, with memory.
+url: https://ha.ci.computer
 version: "0.2.0"
 slug: companion_voice
 init: false
@@ -11,7 +12,7 @@ boot: auto
 ports:
   10700/tcp: 10700
 options:
-  ci_server_url: "http://ci-server:8080"
+  ci_server_url: ""
   ci_server_api_key: ""
   ci_model: "ollama:llama3.2"
   ci_tts_voice: "alloy"
