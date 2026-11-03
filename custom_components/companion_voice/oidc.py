@@ -15,12 +15,21 @@ class OIDCError(Exception):
     """Sign-in with CI-Portal failed."""
 
 
+REQUIRED_ENDPOINTS = ("authorization_endpoint", "token_endpoint", "userinfo_endpoint")
+
+
 async def discover(session: aiohttp.ClientSession, portal_url: str) -> dict[str, Any]:
     url = f"{portal_url.rstrip('/')}/api/auth/.well-known/openid-configuration"
     async with session.get(url) as resp:
         if resp.status != 200:
             raise OIDCError(f"discovery returned HTTP {resp.status}")
-        return await resp.json()
+        meta = await resp.json()
+    if not isinstance(meta, dict):
+        raise OIDCError("discovery is not a JSON object")
+    missing = [key for key in REQUIRED_ENDPOINTS if key not in meta]
+    if missing:
+        raise OIDCError(f"discovery has no {', '.join(missing)}")
+    return meta
 
 
 async def exchange_code(

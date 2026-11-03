@@ -22,6 +22,7 @@
       }
     },
     "error": {
+      "cannot_reach_portal": "Could not read the CI-Portal at that address. Check the CI-Portal URL.",
       "invalid_url": "Enter a full URL starting with http:// or https://",
       "memory_key_required": "A memory API key is required when a Memory URL is set",
       "sign_in_failed": "Sign-in did not complete. Start over and try a fresh code."
