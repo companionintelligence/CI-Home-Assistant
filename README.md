@@ -10,7 +10,7 @@
 
 [![release](https://img.shields.io/badge/release-not%20published-757575?style=flat-square)](https://github.com/companionintelligence/CI-Home-Assistant-Voice-PE/releases)
 [![platform](https://img.shields.io/badge/platform-Home%20Assistant%20%C2%B7%20Docker-0a6358?style=flat-square)](https://github.com/companionintelligence/CI-Home-Assistant-Voice-PE)
-[![License](https://img.shields.io/badge/license-PolyForm%20NC%201.0-0a6358?style=flat-square)](LICENSE.md)
+[![License](https://img.shields.io/badge/license-MIT-0a6358?style=flat-square)](LICENSE.md)
 [![Discord](https://img.shields.io/badge/chat-Discord-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.com/invite/yQp9hwpzAa)
 
 <p align="center"><a href="https://ha.ci.computer">Website</a> · <a href="#choose-your-path">Get started</a> · <a href="#license">License</a> · <a href="README.md#quick-start">Documentation</a> · <a href="https://docs.ci.computer/docs/reference/open-source-systems">Systems map</a></p>
@@ -301,5 +301,5 @@ Choose one deployment path and use its corresponding configuration section. For 
 
 ## License
 
-[PolyForm Noncommercial 1.0.0](LICENSE.md). See [NOTICE.md](NOTICE.md),
+[MIT](LICENSE.md). See [NOTICE.md](NOTICE.md),
 [THIRD_PARTY.md](THIRD_PARTY.md) and [CREDITS.md](CREDITS.md).

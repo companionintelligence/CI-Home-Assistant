@@ -4,7 +4,7 @@
 
 Three hops, by default all inside your home: the Voice PE hears the wake word, Home Assistant passes the speech on, and your Companion answers. In the recommended setup, speech and answers stay inside your home. The keys you type or generate on the setup site stay in your browser. The connection check on the page sends your MASTER_API_KEY only to the ci-server address you enter.
 
-Companion Voice is licensed under the PolyForm Noncommercial License 1.0.0, free for personal and nonprofit use. Companion Intelligence (https://ci.computer/) is the platform this belongs to.
+Companion Voice is licensed under the MIT License. Companion Intelligence (https://ci.computer/) is the platform this belongs to.
 
 ## Pages
 
