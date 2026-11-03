@@ -145,7 +145,7 @@ test('index.html: privacy claims are qualified and the license line links the li
   assert.match(html, /in the recommended setup keeps every word inside your home/);
   assert.match(html, /openai:<\/code> sends your questions/);
   assert.ok(!/about fifteen minutes|About 15 minutes/i.test(html), 'no unsupported time claim');
-  assert.ok(hrefs(html).includes('https://polyformproject.org/licenses/noncommercial/1.0.0'));
+  assert.ok(hrefs(html).includes('https://github.com/companionintelligence/CI-Home-Assistant-Voice-PE/blob/main/LICENSE.md'));
   assert.ok(hrefs(html).includes('mailto:support@companionintelligence.com'));
 });
 

@@ -250,8 +250,10 @@
   },
   "license": {
     "file": "LICENSE.md",
-    "required_notice_line": 3,
-    "required_notice": "> Required Notice: Copyright LifeScope INC, DBA Companion Intelligence (https://ci.computer)"
+    "spdx": "MIT",
+    "title_line": "MIT License",
+    "copyright_line": 3,
+    "copyright_notice": "Copyright (c) 2026 LifeScope INC, DBA Companion Intelligence (https://ci.computer)"
   },
   "assets_ignore": {
     "note": "wrangler reads .assetsignore from the root of the assets directory (site.assets_directory) and uses gitignore rules. The held out line must be exactly this text, and no line may start with ! to re-include it.",

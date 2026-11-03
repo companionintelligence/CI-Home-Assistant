@@ -602,12 +602,15 @@ test('memory: platform label ha-voice-pe in the facade default and the bridge re
   assert.equal(bridge.match(/"platform":\s*"([^"]+)"/)?.[1], frozen.memory.platform);
 });
 
-test('LICENSE.md line 3 (the PolyForm Required Notice) is unchanged byte for byte', async () => {
-  assert.equal(frozen.license.required_notice_line, 3);
-  const line = (await text(frozen.license.file)).split('\n')[frozen.license.required_notice_line - 1];
+test('LICENSE.md is the MIT License and its copyright line is unchanged byte for byte', async () => {
+  const lines = (await text(frozen.license.file)).split('\n');
+  assert.equal(frozen.license.spdx, 'MIT');
+  assert.equal(lines[0], frozen.license.title_line);
+  assert.equal(frozen.license.copyright_line, 3);
+  const line = lines[frozen.license.copyright_line - 1];
   assert.ok(
-    Buffer.from(line, 'utf8').equals(Buffer.from(frozen.license.required_notice, 'utf8')),
-    `LICENSE.md line 3 is now: ${JSON.stringify(line)}`,
+    Buffer.from(line, 'utf8').equals(Buffer.from(frozen.license.copyright_notice, 'utf8')),
+    `LICENSE.md copyright line is now: ${JSON.stringify(line)}`,
   );
 });
 
