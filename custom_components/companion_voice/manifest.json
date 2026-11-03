@@ -1,12 +1,14 @@
 {
   "domain": "companion_voice",
   "name": "Companion Voice",
+  "categories": ["ai_voice.voice_assistants"],
   "codeowners": ["@mrhegemon"],
   "config_flow": true,
   "dependencies": ["http"],
-  "documentation": "https://ha.ci.computer",
-  "issue_tracker": "https://github.com/companionintelligence/CI-Home-Assistant-Voice-PE/issues",
+  "documentation": "https://github.com/companionintelligence/CI-Home-Assistant-Voice-PE#home-assistant-app-and-hacs-integration",
+  "integration_type": "service",
   "iot_class": "local_push",
+  "issue_tracker": "https://github.com/companionintelligence/CI-Home-Assistant-Voice-PE/issues",
   "requirements": [],
   "version": "0.2.0"
 }

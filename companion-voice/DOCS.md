@@ -6,7 +6,7 @@ from your Companion Intelligence server (ci-server), grounded in Companion Memor
 
 ## Setup
 
-1. Set **ci_server_url** to your ci-server, for example `http://ci-server:8080`.
+1. Set **ci_server_url** to your ci-server's address as Home Assistant can reach it, for example `http://192.168.1.20:8080`. It is required, and the app stops without it. The name `ci-server` only resolves inside the Docker Compose stack, so it won't work here.
 2. Set **ci_server_api_key** to the ci-server master key.
 3. Start the app. Then add the **Wyoming Protocol** integration with host
    `localhost` (or this machine's address) and port `10700`.
@@ -19,7 +19,7 @@ For control from Companion Hub and Companion Memory sign-in, install the
 
 | Option | Default | Purpose |
 |---|---|---|
-| `ci_server_url` | `http://ci-server:8080` | ci-server base URL |
+| `ci_server_url` | none, required | ci-server base URL, reachable from Home Assistant |
 | `ci_server_api_key` | empty | ci-server master key |
 | `ci_model` | `ollama:llama3.2` | Model the bridge asks for |
 | `ci_tts_voice` | `alloy` | Voice offered to Home Assistant |
