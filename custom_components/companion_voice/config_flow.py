@@ -94,13 +94,16 @@ class CompanionVoiceConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             try:
                 await self._complete_sign_in(user_input["code"].strip(), redirect_uri)
-            except OIDCError:
+            except (OIDCError, aiohttp.ClientError, ValueError):
                 errors["base"] = "sign_in_failed"
             else:
                 return self._create_entry()
 
         session = async_get_clientsession(self.hass)
-        authorize = await self._authorize_url(redirect_uri, session)
+        try:
+            authorize = await self._authorize_url(redirect_uri, session)
+        except (OIDCError, aiohttp.ClientError, ValueError):
+            return self.async_abort(reason="cannot_reach_portal")
         schema = vol.Schema({vol.Required("code"): str})
         return self.async_show_form(
             step_id="sign_in",

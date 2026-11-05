@@ -28,7 +28,8 @@
       "sign_in_failed": "Sign-in did not complete. Start over and try a fresh code."
     },
     "abort": {
-      "already_configured": "Companion Voice is already set up."
+      "already_configured": "Companion Voice is already set up.",
+      "cannot_reach_portal": "Could not reach CI-Portal. Check the CI-Portal URL and start the setup again."
     }
   },
   "options": {
