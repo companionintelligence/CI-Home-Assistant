@@ -1,4 +1,7 @@
 """Config and options flow: the endpoints, the CI-Portal sign-in and the watched entities."""
+from unittest.mock import AsyncMock, patch
+
+import aiohttp
 from homeassistant import config_entries
 from homeassistant.data_entry_flow import FlowResultType
 from pytest_homeassistant_custom_component.common import MockConfigEntry
@@ -157,3 +160,40 @@ async def test_portal_without_its_endpoints_is_reported_on_the_first_step(hass, 
     result = await submit_user_step(hass)
     assert result["type"] is FlowResultType.FORM
     assert result["errors"] == {"base": "cannot_reach_portal"}
+
+
+async def test_dropped_connection_during_sign_in_shows_sign_in_failed(hass, aioclient_mock):
+    aioclient_mock.get(DISCOVERY, json=DISCOVERY_DOC)
+    aioclient_mock.post(TOKEN, exc=aiohttp.ClientConnectionError("connection dropped"))
+    result = await submit_user_step(hass)
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], {"code": "abc"})
+    assert result["type"] is FlowResultType.FORM
+    assert result["step_id"] == "sign_in"
+    assert result["errors"] == {"base": "sign_in_failed"}
+
+
+async def test_userinfo_that_cannot_be_read_shows_sign_in_failed(hass, aioclient_mock):
+    aioclient_mock.get(DISCOVERY, json=DISCOVERY_DOC)
+    aioclient_mock.post(TOKEN, json={"access_token": "portal-access-token"})
+    aioclient_mock.get(USERINFO, exc=aiohttp.ClientConnectionError("connection dropped"))
+    result = await submit_user_step(hass)
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], {"code": "abc"})
+    assert result["type"] is FlowResultType.FORM
+    assert result["errors"] == {"base": "sign_in_failed"}
+
+
+async def test_a_token_response_that_is_not_json_shows_sign_in_failed(hass, aioclient_mock):
+    aioclient_mock.get(DISCOVERY, json=DISCOVERY_DOC)
+    aioclient_mock.post(TOKEN, text="<html>maintenance</html>")
+    result = await submit_user_step(hass)
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], {"code": "abc"})
+    assert result["type"] is FlowResultType.FORM
+    assert result["errors"] == {"base": "sign_in_failed"}
+
+
+async def test_portal_that_disappears_before_sign_in_aborts(hass):
+    discover = AsyncMock(side_effect=[DISCOVERY_DOC, aiohttp.ClientConnectionError("portal gone")])
+    with patch("custom_components.companion_voice.config_flow.discover", discover):
+        result = await submit_user_step(hass)
+    assert result["type"] is FlowResultType.ABORT
+    assert result["reason"] == "cannot_reach_portal"
